@@ -66,11 +66,12 @@
         .profile-box { background: #111; border: 1px solid #222; border-radius: 20px; padding: 20px; margin-bottom: 20px; }
         .profile-box-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
         
-        /* ДОБАВЛЕНО: Мои подарки */
-        .gifts-box { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 1px solid #333; }
-        .gift-empty { text-align: center; color: #777; font-size: 14px; margin-bottom: 20px; }
-        .btn-green { background: #00ff87; color: #000; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; width: 100%; margin-bottom: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 255, 135, 0.3); }
-        .btn-dark { background: #222; color: #fff; border: 1px solid #333; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; width: 100%; cursor: pointer; }
+                       <!-- МОИ ПОДАРКИ -->
+                <div class="profile-box gifts-box" style="min-height: 220px; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="profile-box-title">🎁 Мои подарки</div>
+                    <p class="gift-empty">У вас пока нет подарков</p>
+                    <button class="btn-dark" onclick="alert('Окно отправки подарка скоро появится!')">Отправить подарок</button>
+                </div>
 
         .ref-program-box { background: linear-gradient(135deg, #1a0d2b 0%, #0a0512 100%); border: 1px solid rgba(181, 60, 255, 0.2); }
         .ref-program-box p { color: #888; font-size: 14px; margin-bottom: 20px; font-weight: 500; }
