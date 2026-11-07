@@ -66,12 +66,10 @@
         .profile-box { background: #111; border: 1px solid #222; border-radius: 20px; padding: 20px; margin-bottom: 20px; }
         .profile-box-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
         
-         <!-- МОИ ПОДАРКИ -->
-        <div class="profile-box gifts-box" style="min-height: 220px; display: flex; flex-direction: column; justify-content: center;">
-        <div class="profile-box-title">🎁 Мои подарки</div>
-         <p class="gift-empty">У вас пока нет подарков</p>
-        <button class="btn-dark" onclick="alert('Окно отправки подарка скоро появится!')">Отправить подарок</button>
-                </div>
+        /* Мои подарки */
+        .gifts-box { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 1px solid #333; min-height: 220px; display: flex; flex-direction: column; }
+        .gift-empty { text-align: center; color: #777; font-size: 14px; margin: auto 0; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+        .btn-dark { background: #222; color: #fff; border: 1px solid #333; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; width: 100%; cursor: pointer; margin-top: auto; }
 
         .ref-program-box { background: linear-gradient(135deg, #1a0d2b 0%, #0a0512 100%); border: 1px solid rgba(181, 60, 255, 0.2); }
         .ref-program-box p { color: #888; font-size: 14px; margin-bottom: 20px; font-weight: 500; }
@@ -81,7 +79,7 @@
         .ref-stat .lbl { font-size: 12px; color: #777; font-weight: 600; }
         .btn-outline-purple { background: rgba(181, 60, 255, 0.1); border: 1px solid rgba(181, 60, 255, 0.4); color: #b53cff; padding: 12px 15px; border-radius: 12px; font-weight: 800; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; width: 100%; justify-content: center; box-shadow: 0 0 15px rgba(181, 60, 255, 0.1); }
 
-        /* ДОБАВЛЕНО: КэшБек */
+        /* КэшБек */
         .cashback-box { background: linear-gradient(135deg, #2b1a0d 0%, #120a05 100%); border: 1px solid rgba(255, 154, 60, 0.2); }
         .cashback-box p { color: #aaa; font-size: 14px; margin-bottom: 0; }
 
@@ -188,14 +186,14 @@
                     </div>
                 </div>
 
-                <!-- ДОБАВЛЕНО: Мои подарки -->
+                <!-- 1. МОИ ПОДАРКИ -->
                 <div class="profile-box gifts-box">
                     <div class="profile-box-title">🎁 Мои подарки</div>
                     <p class="gift-empty">У вас пока нет подарков</p>
-                    <button class="btn-green" onclick="alert('Окно отправки подарка скоро появится!')">Отправить подарок</button>
-                    <button class="btn-dark">Оценить подарок</button>
+                    <button class="btn-dark" onclick="alert('Окно отправки подарка скоро появится!')">Отправить подарок</button>
                 </div>
 
+                <!-- 2. РЕФЕРАЛКА -->
                 <div class="profile-box ref-program-box">
                     <div class="profile-box-title" id="t-ref-prog">👥 Реферальная программа</div>
                     <p id="t-ref-desc">15% от заработка приложения</p>
@@ -212,12 +210,13 @@
                     <button class="btn-outline-purple" id="t-btn-go">Перейти в раздел ›</button>
                 </div>
 
-                <!-- ДОБАВЛЕНО: КэшБек -->
+                <!-- 3. КЭШБЕК -->
                 <div class="profile-box cashback-box">
                     <div class="profile-box-title">💸 КэшБек 15%</div>
                     <p>Кэшбек начисляется раз в неделю от суммы твоих проигрышей.</p>
                 </div>
 
+                <!-- 4. ИСТОРИЯ -->
                 <div class="profile-box">
                     <div class="profile-box-title" id="t-stats-title">📈 История операций</div>
                     <div class="stats-tabs">
