@@ -66,13 +66,11 @@
         .profile-box { background: #111; border: 1px solid #222; border-radius: 20px; padding: 20px; margin-bottom: 20px; }
         .profile-box-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
         
-        /* Мои подарки */
         .gifts-box { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 1px solid #333; }
         .gift-empty { text-align: center; color: #777; font-size: 14px; margin-bottom: 20px; }
         .btn-green { background: #00ff87; color: #000; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; width: 100%; margin-bottom: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 255, 135, 0.3); }
         .btn-dark { background: #222; color: #fff; border: 1px solid #333; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; width: 100%; cursor: pointer; }
 
-        /* Рефералка */
         .ref-program-box { background: linear-gradient(135deg, #1a0d2b 0%, #0a0512 100%); border: 1px solid rgba(181, 60, 255, 0.2); }
         .ref-program-box p { color: #888; font-size: 14px; margin-bottom: 20px; font-weight: 500; }
         .ref-stats { display: flex; gap: 10px; margin-bottom: 20px; }
@@ -81,11 +79,9 @@
         .ref-stat .lbl { font-size: 12px; color: #777; font-weight: 600; }
         .btn-outline-purple { background: rgba(181, 60, 255, 0.1); border: 1px solid rgba(181, 60, 255, 0.4); color: #b53cff; padding: 12px 15px; border-radius: 12px; font-weight: 800; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; width: 100%; justify-content: center; box-shadow: 0 0 15px rgba(181, 60, 255, 0.1); }
 
-        /* КэшБек */
         .cashback-box { background: linear-gradient(135deg, #2b1a0d 0%, #120a05 100%); border: 1px solid rgba(255, 154, 60, 0.2); }
         .cashback-box p { color: #aaa; font-size: 14px; margin-bottom: 0; }
 
-        /* История (Транзакции) */
         .stats-tabs { display: flex; gap: 10px; margin-bottom: 20px; background: #050505; padding: 5px; border-radius: 14px; border: 1px solid #222; }
         .stats-tab { flex: 1; text-align: center; padding: 10px; border-radius: 10px; color: #777; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
         .stats-tab.active { background: #b53cff; color: #fff; box-shadow: 0 2px 15px rgba(181, 60, 255, 0.4); }
@@ -163,7 +159,6 @@
             <!-- СЛАЙД 4: Профиль -->
             <div class="swiper-slide">
                 
-                <!-- ВЕРХ: Аватарка и статы -->
                 <div class="profile-header">
                     <div class="profile-stats left">
                         <div class="stat-item">
@@ -191,15 +186,15 @@
                     </div>
                 </div>
 
-                <!-- 1. МОИ ПОДАРКИ -->
+                <!-- 1. ПОДАРКИ -->
                 <div class="profile-box gifts-box">
                     <div class="profile-box-title" id="t-gifts-title">🎁 Мои подарки</div>
                     <p class="gift-empty" id="t-gifts-desc">У вас пока нет подарков</p>
-                    <button class="btn-green" id="t-btn-gift" onclick="alert('Окно отправки подарка появится здесь!')">Отправить подарок</button>
+                    <button class="btn-green" id="t-btn-gift">Отправить подарок</button>
                     <button class="btn-dark" id="t-btn-rate">Оценить подарок</button>
                 </div>
 
-                <!-- 2. РЕФЕРАЛЬНАЯ ПРОГРАММА -->
+                <!-- 2. РЕФЕРАЛКА -->
                 <div class="profile-box ref-program-box">
                     <div class="profile-box-title" id="t-ref-prog">👥 Реферальная программа</div>
                     <p id="t-ref-desc">15% от заработка приложения</p>
@@ -222,7 +217,7 @@
                     <p id="t-cashback-desc">Кэшбек начисляется раз в неделю от суммы твоих проигрышей.</p>
                 </div>
 
-                <!-- 4. ИСТОРИЯ ПРОЕБОВ -->
+                <!-- 4. ИСТОРИЯ -->
                 <div class="profile-box">
                     <div class="profile-box-title" id="t-stats-title">📈 История операций</div>
                     <div class="stats-tabs">
@@ -388,4 +383,21 @@
 
         function toggleModal() { overlay.classList.toggle('active'); modal.classList.toggle('active'); }
         openBtn.addEventListener('click', toggleModal);
-        closeBtn.addEventListener('click', toggle
+        closeBtn.addEventListener('click', toggleModal);
+        overlay.addEventListener('click', toggleModal);
+
+        document.querySelectorAll('#currency-select .segment-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentCurr = this.dataset.curr;
+                localStorage.setItem('curr', currentCurr);
+                document.querySelectorAll('#currency-select .segment-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                updateBalance();
+            });
+        });
+
+        document.querySelectorAll('#lang-select .segment-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentLang = this.dataset.lang;
+                localStorage.setItem('lang', currentLang);
+                updateLanguage();
