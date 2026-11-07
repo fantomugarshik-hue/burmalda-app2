@@ -5,95 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Burmalda Games</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Подключаем Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #000; color: #fff; padding-bottom: 80px; overflow-x: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #050505; color: #fff; padding-bottom: 90px; overflow-x: hidden; }
         
-        /* Контейнер для экранов */
-        .screen { display: none; padding: 15px 20px; opacity: 0; transition: opacity 0.3s ease-in-out; }
-        .screen.active { display: block; opacity: 1; }
+        /* Контейнер Swiper */
+        .swiper { width: 100%; height: calc(100vh - 90px); }
+        .swiper-slide { overflow-y: auto; padding: 15px 20px; padding-bottom: 30px; }
 
         /* Шапка */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
-        .settings-btn { background: #222; border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; display: flex; align-items: center; justify-content: center; }
-        .header-right { display: flex; gap: 10px; align-items: center; }
-        .connect-btn { background: #2ea6ff; color: #fff; border: none; padding: 10px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 5px; }
-        .balance-btn { background: #222; color: #fff; border: 1px solid #333; padding: 10px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; position: sticky; top: 0; background: rgba(5,5,5,0.8); backdrop-filter: blur(10px); z-index: 100; }
+        .settings-btn { background: #151515; border: 1px solid #252525; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .header-right { display: flex; gap: 8px; align-items: center; }
+        
+        .connect-btn { background: linear-gradient(180deg, #3bb3ff 0%, #1c88d1 100%); color: #fff; border: none; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 15px rgba(59, 179, 255, 0.3); }
+        .balance-btn { background: #151515; color: #fff; border: 1px solid #252525; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 
         /* Баннер */
-        .banner { background: linear-gradient(90deg, #f3a73f 0%, #f7cf61 100%); border-radius: 15px; padding: 20px; position: relative; overflow: hidden; color: #000; margin-bottom: 20px; }
-        .banner h2 { font-size: 18px; font-weight: 900; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); margin-bottom: 5px; }
-        .banner p { font-size: 14px; font-weight: bold; color: #fff; }
+        .banner { background: linear-gradient(135deg, #ff9a3c 0%, #ff4a4a 100%); border-radius: 20px; padding: 22px; position: relative; overflow: hidden; color: #000; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(255, 74, 74, 0.3); }
+        .banner::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%); transform: rotate(30deg); }
+        .banner h2 { font-size: 20px; font-weight: 900; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-bottom: 5px; line-height: 1.1; }
+        .banner p { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.9); }
 
         /* Заголовки */
-        .section-title { margin: 20px 0 15px 0; font-size: 20px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .section-title { margin: 25px 0 15px 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
 
-        /* Сетка (Главная) */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .card { border-radius: 15px; aspect-ratio: 3/4; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 15px 10px; position: relative; overflow: hidden; cursor: pointer; }
-        .card:active { transform: scale(0.95); transition: 0.1s; }
-        .card span { font-weight: bold; font-size: 15px; z-index: 2; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        /* Сетка */
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .card { border-radius: 18px; aspect-ratio: 3/4; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 15px 10px; position: relative; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); }
+        .card:active { transform: scale(0.96); transition: 0.1s; }
+        .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%); }
+        .card span { font-weight: 800; font-size: 14px; z-index: 2; text-shadow: 0 2px 5px rgba(0,0,0,0.8); text-align: center; line-height: 1.1; }
         
-        /* Цвета карточек */
-        .card-upgrade { background: linear-gradient(180deg, #7a5cf0 0%, #5040b0 100%); }
-        .card-rocket { background: linear-gradient(180deg, #e85c93 0%, #992c59 100%); }
-        .card-pvp { background: linear-gradient(180deg, #40d177 0%, #1d7e3d 100%); }
-        .card-giveaway { background: linear-gradient(180deg, #b04343 0%, #681f1f 100%); }
-        .card-pickaxe { background: linear-gradient(180deg, #407bd1 0%, #1f3d7e 100%); }
-        .card-plinko { background: linear-gradient(180deg, #f3d045 0%, #997d1c 100%); color: #000;}
+        .card-upgrade { background: linear-gradient(145deg, #8a63ff 0%, #4b2bb3 100%); }
+        .card-rocket { background: linear-gradient(145deg, #ff5c9c 0%, #a3184e 100%); }
+        .card-pvp { background: linear-gradient(145deg, #35e07f 0%, #12823f 100%); }
+        .card-giveaway { background: linear-gradient(145deg, #ff5050 0%, #8e1414 100%); }
+        .card-pickaxe { background: linear-gradient(145deg, #4da2ff 0%, #185ab3 100%); }
+        .card-plinko { background: linear-gradient(145deg, #ffd63d 0%, #b38f0f 100%); color: #fff;}
 
         /* Нижнее меню */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #111; border-top: 1px solid #222; display: flex; justify-content: space-around; padding: 10px 0 20px 0; z-index: 10; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 5px; color: #666; font-size: 12px; font-weight: bold; cursor: pointer; }
-        .nav-item.active { color: #00FF7F; }
-        .nav-icon { font-size: 20px; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 12px 0 25px 0; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #777; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .nav-item.active { color: #00ff87; transform: translateY(-2px); }
+        .nav-icon { font-size: 22px; filter: grayscale(1); transition: 0.2s; }
+        .nav-item.active .nav-icon { filter: grayscale(0); transform: scale(1.1); }
 
-        /* --- ПРОФИЛЬ --- */
+        /* ПРОФИЛЬ */
         .profile-header { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 30px; }
         .profile-stats { width: 33%; display: flex; flex-direction: column; gap: 15px; }
         .profile-stats.left { text-align: right; align-items: flex-end; }
         .profile-stats.right { text-align: left; align-items: flex-start; }
         .stat-item { display: flex; flex-direction: column; }
-        .stat-value { font-size: 20px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
-        .stat-label { font-size: 11px; color: #888; margin-top: 2px; text-transform: uppercase; }
+        .stat-value { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 5px; }
+        .stat-label { font-size: 11px; color: #777; margin-top: 2px; text-transform: uppercase; font-weight: 600; }
         .profile-avatar-container { width: 33%; display: flex; flex-direction: column; align-items: center; }
-        .profile-avatar { width: 80px; height: 80px; background: #7ae582; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; margin-bottom: 10px; }
-        .profile-name { font-size: 16px; font-weight: bold; }
+        .profile-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #00ff87 0%, #60efff 100%); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 900; margin-bottom: 10px; box-shadow: 0 0 20px rgba(0, 255, 135, 0.3); }
+        .profile-name { font-size: 16px; font-weight: 800; }
 
-        .profile-box { background: #111; border-radius: 15px; padding: 20px; margin-bottom: 20px; }
-        .profile-box-title { font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
+        .profile-box { background: #111; border: 1px solid #222; border-radius: 20px; padding: 20px; margin-bottom: 20px; }
+        .profile-box-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
         
-        /* Реферальная программа */
-        .ref-program-box { background: linear-gradient(135deg, #0d2b1e 0%, #0a1a12 100%); border: 1px solid #1a4a33; }
-        .ref-program-box p { color: #888; font-size: 14px; margin-bottom: 20px; }
+        .ref-program-box { background: linear-gradient(135deg, #0d2b1e 0%, #0a1a12 100%); border: 1px solid rgba(0, 255, 135, 0.2); }
+        .ref-program-box p { color: #888; font-size: 14px; margin-bottom: 20px; font-weight: 500; }
         .ref-stats { display: flex; gap: 10px; margin-bottom: 20px; }
-        .ref-stat { background: #111; padding: 15px; border-radius: 10px; flex: 1; }
-        .ref-stat .val { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
-        .ref-stat .lbl { font-size: 12px; color: #888; }
-        .btn-outline-green { background: transparent; border: 1px solid #00FF7F; color: #00FF7F; padding: 10px 15px; border-radius: 10px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+        .ref-stat { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; flex: 1; }
+        .ref-stat .val { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
+        .ref-stat .lbl { font-size: 12px; color: #777; font-weight: 600; }
+        .btn-outline-green { background: rgba(0, 255, 135, 0.1); border: 1px solid rgba(0, 255, 135, 0.3); color: #00ff87; padding: 12px 15px; border-radius: 12px; font-weight: 800; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; width: 100%; justify-content: center; }
 
-        /* Вкладки Баланс / Мои игры */
-        .stats-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .stats-tab { flex: 1; text-align: center; padding: 12px; border-radius: 12px; background: #222; color: #888; font-weight: bold; cursor: pointer; }
-        .stats-tab.active { background: #00FF7F; color: #000; }
+        .stats-tabs { display: flex; gap: 10px; margin-bottom: 20px; background: #050505; padding: 5px; border-radius: 14px; border: 1px solid #222; }
+        .stats-tab { flex: 1; text-align: center; padding: 10px; border-radius: 10px; color: #777; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .stats-tab.active { background: #222; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
-        /* История транзакций */
-        .transactions-desc { color: #666; font-size: 13px; margin-bottom: 15px; line-height: 1.4; }
+        .transactions-desc { color: #555; font-size: 12px; margin-bottom: 15px; line-height: 1.4; font-weight: 500; }
         .tx-list { display: flex; flex-direction: column; }
-        .tx-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 10px; border-bottom: 1px solid #222; }
+        .tx-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 10px; border-bottom: 1px solid #1a1a1a; }
         .tx-left { display: flex; flex-direction: column; gap: 4px; }
-        .tx-title { font-size: 15px; font-weight: bold; }
-        .tx-date { font-size: 12px; color: #666; }
-        .tx-amount { font-size: 15px; font-weight: bold; }
+        .tx-title { font-size: 15px; font-weight: 700; }
+        .tx-date { font-size: 12px; color: #555; font-weight: 500; }
+        .tx-amount { font-size: 15px; font-weight: 800; }
         .tx-amount.minus { color: #ff4a4a; }
-        .tx-amount.plus { color: #00FF7F; }
+        .tx-amount.plus { color: #00ff87; }
         .tx-bg-minus { background: rgba(255, 74, 74, 0.05); }
-        .tx-bg-plus { background: rgba(0, 255, 127, 0.05); }
+        .tx-bg-plus { background: rgba(0, 255, 135, 0.05); }
     </style>
 </head>
 <body>
 
-    <!-- Шапка -->
+    <!-- Шапка (она теперь вне свайпера, чтобы всегда быть наверху) -->
     <div class="header">
         <button class="settings-btn">⚙️</button>
         <div class="header-right">
@@ -102,145 +104,162 @@
         </div>
     </div>
 
-    <!-- ЭКРАН 1: Главная -->
-    <div id="screen-home" class="screen active">
-        <div class="banner">
-            <h2>Бесплатный кейс</h2>
-            <p>за подписку</p>
-            <div style="position: absolute; right: 20px; bottom: 10px; font-size: 50px; transform: rotate(15deg);">🎁</div>
-        </div>
-
-        <div class="section-title">🔥 Лучшие игры</div>
-        <div class="grid">
-            <div class="card card-upgrade"><span>Апгрейдер</span></div>
-            <div class="card card-rocket"><span>Ракетка</span></div>
-            <div class="card card-pvp"><span>PVP</span></div>
-        </div>
-
-        <div class="section-title">⚡ Быстрые игры</div>
-        <div class="grid">
-            <div class="card card-giveaway"><span>Розыгрыши</span></div>
-            <div class="card card-pickaxe"><span>Кирка</span></div>
-            <div class="card card-plinko"><span>Плинко</span></div>
-        </div>
-    </div>
-
-    <!-- ЭКРАН 2: Кейсы -->
-    <div id="screen-cases" class="screen">
-        <h1 style="margin-bottom: 20px;">📦 Кейсы</h1>
-        <p style="color: #888; margin-bottom: 20px;">Здесь будут твои кейсы.</p>
-        <div class="grid" style="grid-template-columns: repeat(2, 1fr);">
-            <div class="card" style="background: #f3a73f; aspect-ratio: 1/1;"><span>Бесплатный кейс</span></div>
-            <div class="card" style="background: #7a5cf0; aspect-ratio: 1/1;"><span>Кейс за 100 билетов</span></div>
-        </div>
-    </div>
-
-    <!-- ЭКРАН 3: Лидеры -->
-    <div id="screen-leaders" class="screen">
-        <h1 style="margin-bottom: 20px;">📊 Топ игроков</h1>
-        <div style="background: #222; border-radius: 10px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between;">
-            <span>🥇 Игрок 1</span> <span style="color: #00FF7F;">1000 ⭐</span>
-        </div>
-        <div style="background: #222; border-radius: 10px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between;">
-            <span>🥈 Игрок 2</span> <span style="color: #00FF7F;">850 ⭐</span>
-        </div>
-    </div>
-
-    <!-- ЭКРАН 4: Профиль -->
-    <div id="screen-profile" class="screen">
-        <div class="profile-header">
-            <div class="profile-stats left">
-                <div class="stat-item">
-                    <div class="stat-value">👥 0</div>
-                    <div class="stat-label">Рефералов</div>
+    <!-- Основной контейнер Swiper -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            
+            <!-- СЛАЙД 1: Главная -->
+            <div class="swiper-slide" id="screen-home">
+                <div class="banner">
+                    <h2>Бесплатный кейс</h2>
+                    <p>за подписку</p>
+                    <div style="position: absolute; right: 20px; bottom: 10px; font-size: 60px; transform: rotate(15deg); filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));">🎁</div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">💵 240</div>
-                    <div class="stat-label">Заработано</div>
+
+                <div class="section-title">🔥 Лучшие игры</div>
+                <div class="grid">
+                    <div class="card card-upgrade"><span>Апгрейдер</span></div>
+                    <div class="card card-rocket"><span>Ракетка</span></div>
+                    <div class="card card-pvp"><span>PVP</span></div>
+                </div>
+
+                <div class="section-title">⚡ Быстрые игры</div>
+                <div class="grid">
+                    <div class="card card-giveaway"><span>Розыгрыши</span></div>
+                    <div class="card card-pickaxe"><span>Кирка</span></div>
+                    <div class="card card-plinko"><span>Плинко</span></div>
                 </div>
             </div>
-            <div class="profile-avatar-container">
-                <div class="profile-avatar" id="profile-avatar">S</div>
-                <div class="profile-name" id="profile-name">s</div>
-            </div>
-            <div class="profile-stats right">
-                <div class="stat-item">
-                    <div class="stat-value">⏱ 47</div>
-                    <div class="stat-label">Дней с нами</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">🏆 0</div>
-                    <div class="stat-label">Лучший выигрыш</div>
-                </div>
-            </div>
-        </div>
 
-        <div class="profile-box ref-program-box">
-            <div class="profile-box-title">👥 Реферальная программа</div>
-            <p>15% от заработка приложения</p>
-            <div class="ref-stats">
-                <div class="ref-stat">
-                    <div class="val">0</div>
-                    <div class="lbl">Рефералов</div>
-                </div>
-                <div class="ref-stat">
-                    <div class="val">0 ⭐</div>
-                    <div class="lbl">Stars заработано</div>
+            <!-- СЛАЙД 2: Кейсы -->
+            <div class="swiper-slide" id="screen-cases">
+                <h1 style="margin-bottom: 20px; font-weight: 800;">📦 Кейсы</h1>
+                <p style="color: #777; margin-bottom: 20px;">Здесь будут твои кейсы.</p>
+                <div class="grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="card" style="background: linear-gradient(145deg, #ffb347 0%, #cc7a00 100%); aspect-ratio: 1/1;"><span>Бесплатный кейс</span></div>
+                    <div class="card" style="background: linear-gradient(145deg, #8a63ff 0%, #4b2bb3 100%); aspect-ratio: 1/1;"><span>Кейс за 100 билетов</span></div>
                 </div>
             </div>
-            <button class="btn-outline-green">Перейти в раздел ›</button>
-        </div>
 
-        <div class="profile-box">
-            <div class="profile-box-title">📈 Подробная статистика</div>
-            <div class="stats-tabs">
-                <div class="stats-tab active">Баланс</div>
-                <div class="stats-tab">Мои игры</div>
-            </div>
-            <p class="transactions-desc">Здесь показаны реальные списания, пополнения и статусы вывода.</p>
-            <div class="tx-list">
-                <div class="tx-item tx-bg-minus">
-                    <div class="tx-left">
-                        <div class="tx-title">Игровая ставка <span style="color: #888; font-weight: normal;">Pickaxe</span></div>
-                        <div class="tx-date">17.10.2026</div>
+            <!-- СЛАЙД 3: Лидеры -->
+            <div class="swiper-slide" id="screen-leaders">
+                <h1 style="margin-bottom: 20px; font-weight: 800;">📊 Топ игроков</h1>
+                <div style="background: #111; border: 1px solid #222; border-radius: 15px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 30px; height: 30px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                        <span style="font-weight: 700;">Игрок 1</span>
                     </div>
-                    <div class="tx-amount minus">-20 STARS</div>
+                    <span style="color: #00ff87; font-weight: 800;">1000 ⭐</span>
                 </div>
-                <div class="tx-item tx-bg-plus">
-                    <div class="tx-left">
-                        <div class="tx-title">Игровой выигрыш <span style="color: #888; font-weight: normal;">Pickaxe</span></div>
-                        <div class="tx-date">17.10.2026</div>
+                <div style="background: #111; border: 1px solid #222; border-radius: 15px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 30px; height: 30px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                        <span style="font-weight: 700;">Игрок 2</span>
                     </div>
-                    <div class="tx-amount plus">+5,6 STARS</div>
+                    <span style="color: #00ff87; font-weight: 800;">850 ⭐</span>
                 </div>
             </div>
+
+            <!-- СЛАЙД 4: Профиль -->
+            <div class="swiper-slide" id="screen-profile">
+                <div class="profile-header">
+                    <div class="profile-stats left">
+                        <div class="stat-item">
+                            <div class="stat-value">👥 0</div>
+                            <div class="stat-label">Рефералов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">💵 240</div>
+                            <div class="stat-label">Заработано</div>
+                        </div>
+                    </div>
+                    <div class="profile-avatar-container">
+                        <div class="profile-avatar" id="profile-avatar">S</div>
+                        <div class="profile-name" id="profile-name">s</div>
+                    </div>
+                    <div class="profile-stats right">
+                        <div class="stat-item">
+                            <div class="stat-value">⏱ 47</div>
+                            <div class="stat-label">Дней с нами</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">🏆 0</div>
+                            <div class="stat-label">Лучший выигрыш</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-box ref-program-box">
+                    <div class="profile-box-title">👥 Реферальная программа</div>
+                    <p>15% от заработка приложения</p>
+                    <div class="ref-stats">
+                        <div class="ref-stat">
+                            <div class="val">0</div>
+                            <div class="lbl">Рефералов</div>
+                        </div>
+                        <div class="ref-stat">
+                            <div class="val">0 ⭐</div>
+                            <div class="lbl">Stars заработано</div>
+                        </div>
+                    </div>
+                    <button class="btn-outline-green">Перейти в раздел ›</button>
+                </div>
+
+                <div class="profile-box">
+                    <div class="profile-box-title">📈 Подробная статистика</div>
+                    <div class="stats-tabs">
+                        <div class="stats-tab active">Баланс</div>
+                        <div class="stats-tab">Мои игры</div>
+                    </div>
+                    <p class="transactions-desc">Здесь показаны реальные списания, пополнения и статусы вывода.</p>
+                    <div class="tx-list">
+                        <div class="tx-item tx-bg-minus">
+                            <div class="tx-left">
+                                <div class="tx-title">Игровая ставка <span style="color: #777; font-weight: 500;">Pickaxe</span></div>
+                                <div class="tx-date">17.10.2026</div>
+                            </div>
+                            <div class="tx-amount minus">-20 STARS</div>
+                        </div>
+                        <div class="tx-item tx-bg-plus">
+                            <div class="tx-left">
+                                <div class="tx-title">Игровой выигрыш <span style="color: #777; font-weight: 500;">Pickaxe</span></div>
+                                <div class="tx-date">17.10.2026</div>
+                            </div>
+                            <div class="tx-amount plus">+5,6 STARS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <!-- Нижнее меню -->
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="switchTab('home', this)">
+        <div class="nav-item active" data-index="0">
             <div class="nav-icon">🏠</div><div>Главная</div>
         </div>
-        <div class="nav-item" onclick="switchTab('cases', this)">
+        <div class="nav-item" data-index="1">
             <div class="nav-icon">📦</div><div>Кейсы</div>
         </div>
-        <div class="nav-item" onclick="switchTab('leaders', this)">
+        <div class="nav-item" data-index="2">
             <div class="nav-icon">📊</div><div>Лидеры</div>
         </div>
-        <div class="nav-item" onclick="switchTab('profile', this)">
+        <div class="nav-item" data-index="3">
             <div class="nav-icon">👤</div><div>Профиль</div>
         </div>
     </div>
 
+    <!-- Подключаем Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         const tg = window.Telegram?.WebApp;
         let user = null;
         if (tg) {
             tg.ready();
             tg.expand();
-            tg.setHeaderColor('#000000');
-            tg.setBackgroundColor('#000000');
+            tg.setHeaderColor('#050505');
+            tg.setBackgroundColor('#050505');
             user = tg.initDataUnsafe?.user;
         }
 
@@ -249,27 +268,32 @@
             document.getElementById('profile-avatar').innerText = user.first_name.charAt(0).toUpperCase();
         }
 
-        // Плавное переключение экранов
-        function switchTab(tabName, element) {
-            const currentScreen = document.querySelector('.screen.active');
-            const newScreen = document.getElementById(`screen-${tabName}`);
-            
-            if (currentScreen) {
-                currentScreen.style.opacity = '0';
-                setTimeout(() => {
-                    currentScreen.classList.remove('active');
-                    newScreen.classList.add('active');
-                    // Небольшая задержка для срабатывания CSS transition
-                    setTimeout(() => { newScreen.style.opacity = '1'; }, 10);
-                }, 200); // Ждем 200мс, пока старый экран исчезнет
-            } else {
-                newScreen.classList.add('active');
-                newScreen.style.opacity = '1';
+        // Инициализация Swiper (Свайпы)
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 0,
+            allowTouchMove: true, // Разрешаем свайпы
+            on: {
+                slideChange: function () {
+                    // Когда свайпаешь, нижнее меню подсвечивается автоматически
+                    const activeIndex = this.activeIndex;
+                    document.querySelectorAll('.nav-item').forEach((nav, index) => {
+                        if (index === activeIndex) {
+                            nav.classList.add('active');
+                        } else {
+                            nav.classList.remove('active');
+                        }
+                    });
+                }
             }
+        });
 
-            document.querySelectorAll('.nav-item').forEach(nav => { nav.classList.remove('active'); });
-            element.classList.add('active');
-        }
+        // Клик по нижнему меню
+        document.querySelectorAll('.nav-item').forEach((item) => {
+            item.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                swiper.slideTo(index); // Плавно перелистываем на нужный слайд
+            });
+        });
     </script>
 </body>
 </html>
