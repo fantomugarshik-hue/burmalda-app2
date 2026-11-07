@@ -66,6 +66,12 @@
         .profile-box { background: #111; border: 1px solid #222; border-radius: 20px; padding: 20px; margin-bottom: 20px; }
         .profile-box-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
         
+        /* ДОБАВЛЕНО: Мои подарки */
+        .gifts-box { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 1px solid #333; }
+        .gift-empty { text-align: center; color: #777; font-size: 14px; margin-bottom: 20px; }
+        .btn-green { background: #00ff87; color: #000; border: none; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; width: 100%; margin-bottom: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 255, 135, 0.3); }
+        .btn-dark { background: #222; color: #fff; border: 1px solid #333; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; width: 100%; cursor: pointer; }
+
         .ref-program-box { background: linear-gradient(135deg, #1a0d2b 0%, #0a0512 100%); border: 1px solid rgba(181, 60, 255, 0.2); }
         .ref-program-box p { color: #888; font-size: 14px; margin-bottom: 20px; font-weight: 500; }
         .ref-stats { display: flex; gap: 10px; margin-bottom: 20px; }
@@ -73,6 +79,10 @@
         .ref-stat .val { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
         .ref-stat .lbl { font-size: 12px; color: #777; font-weight: 600; }
         .btn-outline-purple { background: rgba(181, 60, 255, 0.1); border: 1px solid rgba(181, 60, 255, 0.4); color: #b53cff; padding: 12px 15px; border-radius: 12px; font-weight: 800; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; width: 100%; justify-content: center; box-shadow: 0 0 15px rgba(181, 60, 255, 0.1); }
+
+        /* ДОБАВЛЕНО: КэшБек */
+        .cashback-box { background: linear-gradient(135deg, #2b1a0d 0%, #120a05 100%); border: 1px solid rgba(255, 154, 60, 0.2); }
+        .cashback-box p { color: #aaa; font-size: 14px; margin-bottom: 0; }
 
         .stats-tabs { display: flex; gap: 10px; margin-bottom: 20px; background: #050505; padding: 5px; border-radius: 14px; border: 1px solid #222; }
         .stats-tab { flex: 1; text-align: center; padding: 10px; border-radius: 10px; color: #777; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
@@ -177,6 +187,14 @@
                     </div>
                 </div>
 
+                <!-- ДОБАВЛЕНО: Мои подарки -->
+                <div class="profile-box gifts-box">
+                    <div class="profile-box-title">🎁 Мои подарки</div>
+                    <p class="gift-empty">У вас пока нет подарков</p>
+                    <button class="btn-green" onclick="alert('Окно отправки подарка скоро появится!')">Отправить подарок</button>
+                    <button class="btn-dark">Оценить подарок</button>
+                </div>
+
                 <div class="profile-box ref-program-box">
                     <div class="profile-box-title" id="t-ref-prog">👥 Реферальная программа</div>
                     <p id="t-ref-desc">15% от заработка приложения</p>
@@ -193,8 +211,14 @@
                     <button class="btn-outline-purple" id="t-btn-go">Перейти в раздел ›</button>
                 </div>
 
+                <!-- ДОБАВЛЕНО: КэшБек -->
+                <div class="profile-box cashback-box">
+                    <div class="profile-box-title">💸 КэшБек 15%</div>
+                    <p>Кэшбек начисляется раз в неделю от суммы твоих проигрышей.</p>
+                </div>
+
                 <div class="profile-box">
-                    <div class="profile-box-title" id="t-stats-title">📈 Подробная статистика</div>
+                    <div class="profile-box-title" id="t-stats-title">📈 История операций</div>
                     <div class="stats-tabs">
                         <div class="stats-tab active" id="t-tab-balance">Баланс</div>
                         <div class="stats-tab" id="t-tab-games">Мои игры</div>
@@ -266,7 +290,7 @@
                 home: "Главная", cases: "Кейсы", leaders: "Лидеры", profile: "Профиль", 
                 refs: "Рефералов", earned: "Заработано", days: "Дней с нами", win: "Лучший выигрыш",
                 ref_prog: "👥 Реферальная программа", ref_desc: "15% от заработка приложения", refs2: "Рефералов", stars_earned: "Stars заработано", btn_go: "Перейти в раздел ›",
-                stats_title: "📈 Подробная статистика", tab_balance: "Баланс", tab_games: "Мои игры", tx_desc: "Здесь показаны реальные списания, пополнения и статусы вывода.",
+                stats_title: "📈 История операций", tab_balance: "Баланс", tab_games: "Мои игры", tx_desc: "Здесь показаны реальные списания, пополнения и статусы вывода.",
                 tx_bet: "Игровая ставка", tx_win: "Игровой выигрыш",
                 free_case: "Бесплатный кейс", for_sub: "за подписку", best_games: "🔥 Лучшие игры", fast_games: "⚡ Быстрые игры", cases_title: "📦 Кейсы", leaders_title: "📊 Топ игроков",
                 upgrader: "Апгрейдер", rocket: "Ракетка", giveaway: "Розыгрыши", pickaxe: "Кирка", plinko: "Плинко",
@@ -276,7 +300,7 @@
                 home: "Home", cases: "Cases", leaders: "Leaders", profile: "Profile", 
                 refs: "Referrals", earned: "Earned", days: "Days with us", win: "Best win",
                 ref_prog: "👥 Referral Program", ref_desc: "15% of app earnings", refs2: "Referrals", stars_earned: "Stars earned", btn_go: "Go to section ›",
-                stats_title: "📈 Detailed Stats", tab_balance: "Balance", tab_games: "My Games", tx_desc: "Here are real transactions and withdrawal statuses.",
+                stats_title: "📈 Transaction History", tab_balance: "Balance", tab_games: "My Games", tx_desc: "Here are real transactions and withdrawal statuses.",
                 tx_bet: "Game bet", tx_win: "Game win",
                 free_case: "Free Case", for_sub: "for subscription", best_games: "🔥 Best Games", fast_games: "⚡ Fast Games", cases_title: "📦 Cases", leaders_title: "📊 Leaderboard",
                 upgrader: "Upgrader", rocket: "Rocket", giveaway: "Giveaways", pickaxe: "Pickaxe", plinko: "Plinko",
@@ -286,7 +310,7 @@
                 home: "首页", cases: "箱子", leaders: "排名", profile: "个人", 
                 refs: "推荐", earned: "已赚", days: "加入天数", win: "最佳赢",
                 ref_prog: "👥 推荐计划", ref_desc: "应用收益的15%", refs2: "推荐", stars_earned: "星星赚取", btn_go: "前往 ›",
-                stats_title: "📈 详细统计", tab_balance: "余额", tab_games: "我的游戏", tx_desc: "这里显示真实的交易和提现状态。",
+                stats_title: "📈 交易记录", tab_balance: "余额", tab_games: "我的游戏", tx_desc: "这里显示真实的交易和提现状态。",
                 tx_bet: "游戏下注", tx_win: "游戏赢取",
                 free_case: "免费箱子", for_sub: "订阅奖励", best_games: "🔥 热门游戏", fast_games: "⚡ 快速游戏", cases_title: "📦 箱子", leaders_title: "📊 排行榜",
                 upgrader: "升级", rocket: "火箭", giveaway: "抽奖", pickaxe: "镐子", plinko: "弹珠",
