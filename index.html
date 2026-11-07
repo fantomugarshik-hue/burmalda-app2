@@ -62,8 +62,10 @@
         .profile-avatar-container { width: 33%; display: flex; flex-direction: column; align-items: center; }
         .profile-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #b53cff 0%, #7a1bb3 100%); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 900; margin-bottom: 10px; box-shadow: 0 0 25px rgba(181, 60, 255, 0.6); border: 2px solid #b53cff; background-size: cover; background-position: center; }
         .profile-name { font-size: 16px; font-weight: 800; }
+        
         .profile-box { background: #111; border: 1px solid #222; border-radius: 20px; padding: 20px; margin-bottom: 20px; }
         .profile-box-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
+        
         .ref-program-box { background: linear-gradient(135deg, #1a0d2b 0%, #0a0512 100%); border: 1px solid rgba(181, 60, 255, 0.2); }
         .ref-program-box p { color: #888; font-size: 14px; margin-bottom: 20px; font-weight: 500; }
         .ref-stats { display: flex; gap: 10px; margin-bottom: 20px; }
@@ -71,6 +73,21 @@
         .ref-stat .val { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
         .ref-stat .lbl { font-size: 12px; color: #777; font-weight: 600; }
         .btn-outline-purple { background: rgba(181, 60, 255, 0.1); border: 1px solid rgba(181, 60, 255, 0.4); color: #b53cff; padding: 12px 15px; border-radius: 12px; font-weight: 800; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; width: 100%; justify-content: center; box-shadow: 0 0 15px rgba(181, 60, 255, 0.1); }
+
+        .stats-tabs { display: flex; gap: 10px; margin-bottom: 20px; background: #050505; padding: 5px; border-radius: 14px; border: 1px solid #222; }
+        .stats-tab { flex: 1; text-align: center; padding: 10px; border-radius: 10px; color: #777; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        .stats-tab.active { background: #b53cff; color: #fff; box-shadow: 0 2px 15px rgba(181, 60, 255, 0.4); }
+        .transactions-desc { color: #555; font-size: 12px; margin-bottom: 15px; line-height: 1.4; font-weight: 500; }
+        .tx-list { display: flex; flex-direction: column; }
+        .tx-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 10px; border-bottom: 1px solid #1a1a1a; }
+        .tx-left { display: flex; flex-direction: column; gap: 4px; }
+        .tx-title { font-size: 15px; font-weight: 700; }
+        .tx-date { font-size: 12px; color: #555; font-weight: 500; }
+        .tx-amount { font-size: 15px; font-weight: 800; }
+        .tx-amount.minus { color: #ff4a4a; }
+        .tx-amount.plus { color: #b53cff; }
+        .tx-bg-minus { background: rgba(255, 74, 74, 0.05); }
+        .tx-bg-plus { background: rgba(181, 60, 255, 0.05); }
 
         /* Настройки */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); z-index: 1000; opacity: 0; pointer-events: none; transition: 0.3s ease; }
@@ -100,7 +117,7 @@
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             
-            <!-- СЛАЙД 1 -->
+            <!-- СЛАЙД 1: Главная -->
             <div class="swiper-slide">
                 <div class="banner">
                     <h2 id="t-free-case">Бесплатный кейс</h2>
@@ -113,25 +130,35 @@
                     <div class="card card-rocket"><span id="t-rocket">Ракетка</span></div>
                     <div class="card card-pvp"><span>PVP</span></div>
                 </div>
+                <div class="section-title" id="t-fast-games">⚡ Быстрые игры</div>
+                <div class="grid">
+                    <div class="card card-giveaway"><span id="t-giveaway">Розыгрыши</span></div>
+                    <div class="card card-pickaxe"><span id="t-pickaxe">Кирка</span></div>
+                    <div class="card card-plinko"><span id="t-plinko">Плинко</span></div>
+                </div>
             </div>
 
-            <!-- СЛАЙД 2 -->
+            <!-- СЛАЙД 2: Кейсы -->
             <div class="swiper-slide">
                 <h1 style="margin-bottom: 20px; font-weight: 800;" id="t-cases-title">📦 Кейсы</h1>
             </div>
 
-            <!-- СЛАЙД 3 -->
+            <!-- СЛАЙД 3: Лидеры -->
             <div class="swiper-slide">
                 <h1 style="margin-bottom: 20px; font-weight: 800;" id="t-leaders-title">📊 Топ игроков</h1>
             </div>
 
-            <!-- СЛАЙД 4 -->
+            <!-- СЛАЙД 4: Профиль -->
             <div class="swiper-slide">
                 <div class="profile-header">
                     <div class="profile-stats left">
                         <div class="stat-item">
                             <div class="stat-value">👥 0</div>
                             <div class="stat-label" id="t-refs">Рефералов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">💵 240</div>
+                            <div class="stat-label" id="t-earned">Заработано</div>
                         </div>
                     </div>
                     <div class="profile-avatar-container">
@@ -143,11 +170,52 @@
                             <div class="stat-value">⏱ 47</div>
                             <div class="stat-label" id="t-days">Дней с нами</div>
                         </div>
+                        <div class="stat-item">
+                            <div class="stat-value">🏆 0</div>
+                            <div class="stat-label" id="t-win">Лучший выигрыш</div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="profile-box ref-program-box">
                     <div class="profile-box-title" id="t-ref-prog">👥 Реферальная программа</div>
+                    <p id="t-ref-desc">15% от заработка приложения</p>
+                    <div class="ref-stats">
+                        <div class="ref-stat">
+                            <div class="val">0</div>
+                            <div class="lbl" id="t-refs2">Рефералов</div>
+                        </div>
+                        <div class="ref-stat">
+                            <div class="val">0 ⭐</div>
+                            <div class="lbl" id="t-stars-earned">Stars заработано</div>
+                        </div>
+                    </div>
                     <button class="btn-outline-purple" id="t-btn-go">Перейти в раздел ›</button>
+                </div>
+
+                <div class="profile-box">
+                    <div class="profile-box-title" id="t-stats-title">📈 Подробная статистика</div>
+                    <div class="stats-tabs">
+                        <div class="stats-tab active" id="t-tab-balance">Баланс</div>
+                        <div class="stats-tab" id="t-tab-games">Мои игры</div>
+                    </div>
+                    <p class="transactions-desc" id="t-tx-desc">Здесь показаны реальные списания, пополнения и статусы вывода.</p>
+                    <div class="tx-list">
+                        <div class="tx-item tx-bg-minus">
+                            <div class="tx-left">
+                                <div class="tx-title" id="t-tx-bet">Игровая ставка <span style="color: #777; font-weight: 500;">Pickaxe</span></div>
+                                <div class="tx-date">17.10.2026</div>
+                            </div>
+                            <div class="tx-amount minus">-20 STARS</div>
+                        </div>
+                        <div class="tx-item tx-bg-plus">
+                            <div class="tx-left">
+                                <div class="tx-title" id="t-tx-win">Игровой выигрыш <span style="color: #777; font-weight: 500;">Pickaxe</span></div>
+                                <div class="tx-date">17.10.2026</div>
+                            </div>
+                            <div class="tx-amount plus">+5,6 STARS</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -165,12 +233,12 @@
     <div class="modal-overlay" id="settingsOverlay"></div>
     <div class="settings-modal" id="settingsModal">
         <div class="modal-header">
-            <div class="modal-title">Настройки</div>
+            <div class="modal-title" id="t-settings-title">Настройки</div>
             <button class="close-btn" id="closeSettings">✕</button>
         </div>
         
         <div class="setting-group">
-            <label class="setting-label">Язык / Language</label>
+            <label class="setting-label" id="t-lang-label">Язык / Language</label>
             <div class="segmented-control" id="lang-select">
                 <button class="segment-btn active" data-lang="ru">Русский</button>
                 <button class="segment-btn" data-lang="en">English</button>
@@ -179,7 +247,7 @@
         </div>
 
         <div class="setting-group">
-            <label class="setting-label">Валюта / Currency</label>
+            <label class="setting-label" id="t-curr-label">Валюта / Currency</label>
             <div class="segmented-control" id="currency-select">
                 <button class="segment-btn" data-curr="rub">Рубли (₽)</button>
                 <button class="segment-btn" data-curr="usd">Доллары ($)</button>
@@ -190,72 +258,69 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // === БАЗА ===
-        // Для теста ставим 8000 звезд. Потом будем тянуть из Supabase.
         let userBalanceInStars = 8000; 
+        const rates = { stars: { symbol: "⭐", rate: 1 }, usd: { symbol: "$", rate: 0.018 }, rub: { symbol: "₽", rate: 1.5 } };
 
-        // Курсы валют
-        const rates = {
-            stars: { symbol: "⭐", rate: 1 },
-            usd: { symbol: "$", rate: 0.018 }, 
-            rub: { symbol: "₽", rate: 1.5 }   
-        };
-
-        // Переводы
         const translations = {
-            ru: { home: "Главная", cases: "Кейсы", leaders: "Лидеры", profile: "Профиль", refs: "Рефералов", days: "Дней с нами", ref_prog: "👥 Реферальная программа", btn_go: "Перейти в раздел ›", free_case: "Бесплатный кейс", for_sub: "за подписку", best_games: "🔥 Лучшие игры", cases_title: "📦 Кейсы", leaders_title: "📊 Топ игроков", upgrader: "Апгрейдер", rocket: "Ракетка" },
-            en: { home: "Home", cases: "Cases", leaders: "Leaders", profile: "Profile", refs: "Referrals", days: "Days with us", ref_prog: "👥 Referral Program", btn_go: "Go to section ›", free_case: "Free Case", for_sub: "for subscription", best_games: "🔥 Best Games", cases_title: "📦 Cases", leaders_title: "📊 Leaderboard", upgrader: "Upgrader", rocket: "Rocket" },
-            cn: { home: "首页", cases: "箱子", leaders: "排名", profile: "个人", refs: "推荐", days: "加入天数", ref_prog: "👥 推荐计划", btn_go: "前往 ›", free_case: "免费箱子", for_sub: "订阅奖励", best_games: "🔥 热门游戏", cases_title: "📦 箱子", leaders_title: "📊 排行榜", upgrader: "升级", rocket: "火箭" }
+            ru: { 
+                home: "Главная", cases: "Кейсы", leaders: "Лидеры", profile: "Профиль", 
+                refs: "Рефералов", earned: "Заработано", days: "Дней с нами", win: "Лучший выигрыш",
+                ref_prog: "👥 Реферальная программа", ref_desc: "15% от заработка приложения", refs2: "Рефералов", stars_earned: "Stars заработано", btn_go: "Перейти в раздел ›",
+                stats_title: "📈 Подробная статистика", tab_balance: "Баланс", tab_games: "Мои игры", tx_desc: "Здесь показаны реальные списания, пополнения и статусы вывода.",
+                tx_bet: "Игровая ставка", tx_win: "Игровой выигрыш",
+                free_case: "Бесплатный кейс", for_sub: "за подписку", best_games: "🔥 Лучшие игры", fast_games: "⚡ Быстрые игры", cases_title: "📦 Кейсы", leaders_title: "📊 Топ игроков",
+                upgrader: "Апгрейдер", rocket: "Ракетка", giveaway: "Розыгрыши", pickaxe: "Кирка", plinko: "Плинко",
+                settings_title: "Настройки", lang_label: "Язык / Language", curr_label: "Валюта / Currency"
+            },
+            en: { 
+                home: "Home", cases: "Cases", leaders: "Leaders", profile: "Profile", 
+                refs: "Referrals", earned: "Earned", days: "Days with us", win: "Best win",
+                ref_prog: "👥 Referral Program", ref_desc: "15% of app earnings", refs2: "Referrals", stars_earned: "Stars earned", btn_go: "Go to section ›",
+                stats_title: "📈 Detailed Stats", tab_balance: "Balance", tab_games: "My Games", tx_desc: "Here are real transactions and withdrawal statuses.",
+                tx_bet: "Game bet", tx_win: "Game win",
+                free_case: "Free Case", for_sub: "for subscription", best_games: "🔥 Best Games", fast_games: "⚡ Fast Games", cases_title: "📦 Cases", leaders_title: "📊 Leaderboard",
+                upgrader: "Upgrader", rocket: "Rocket", giveaway: "Giveaways", pickaxe: "Pickaxe", plinko: "Plinko",
+                settings_title: "Settings", lang_label: "Language", curr_label: "Currency"
+            },
+            cn: { 
+                home: "首页", cases: "箱子", leaders: "排名", profile: "个人", 
+                refs: "推荐", earned: "已赚", days: "加入天数", win: "最佳赢",
+                ref_prog: "👥 推荐计划", ref_desc: "应用收益的15%", refs2: "推荐", stars_earned: "星星赚取", btn_go: "前往 ›",
+                stats_title: "📈 详细统计", tab_balance: "余额", tab_games: "我的游戏", tx_desc: "这里显示真实的交易和提现状态。",
+                tx_bet: "游戏下注", tx_win: "游戏赢取",
+                free_case: "免费箱子", for_sub: "订阅奖励", best_games: "🔥 热门游戏", fast_games: "⚡ 快速游戏", cases_title: "📦 箱子", leaders_title: "📊 排行榜",
+                upgrader: "升级", rocket: "火箭", giveaway: "抽奖", pickaxe: "镐子", plinko: "弹珠",
+                settings_title: "设置", lang_label: "语言", curr_label: "货币"
+            }
         };
 
         let currentLang = localStorage.getItem('lang') || 'ru';
         let currentCurr = localStorage.getItem('curr') || 'stars';
 
-        // === ФУНКЦИИ ===
         function updateBalance() {
             const curr = rates[currentCurr];
             let finalValue = userBalanceInStars * curr.rate;
-            
-            // Красивое форматирование (если больше 1000, то с пробелом)
             let formattedValue = finalValue % 1 === 0 ? finalValue : finalValue.toFixed(2);
-            if (finalValue >= 1000) {
-                formattedValue = finalValue.toLocaleString('ru-RU');
-            }
-            
+            if (finalValue >= 1000) formattedValue = finalValue.toLocaleString('ru-RU');
             document.getElementById('main-balance').innerText = `${formattedValue} ${curr.symbol}`;
         }
 
         function updateLanguage() {
             const t = translations[currentLang];
+            for (const key in t) {
+                const el = document.getElementById(`t-${key.replace(/_/g, '-')}`);
+                if (el) el.innerText = t[key];
+            }
             document.getElementById('nav-home').innerText = t.home;
             document.getElementById('nav-cases').innerText = t.cases;
             document.getElementById('nav-leaders').innerText = t.leaders;
             document.getElementById('nav-profile').innerText = t.profile;
-            document.getElementById('t-refs').innerText = t.refs;
-            document.getElementById('t-days').innerText = t.days;
-            document.getElementById('t-ref-prog').innerText = t.ref_prog;
-            document.getElementById('t-btn-go').innerText = t.btn_go;
-            document.getElementById('t-free-case').innerText = t.free_case;
-            document.getElementById('t-for-sub').innerText = t.for_sub;
-            document.getElementById('t-best-games').innerText = t.best_games;
-            document.getElementById('t-cases-title').innerText = t.cases_title;
-            document.getElementById('t-leaders-title').innerText = t.leaders_title;
-            document.getElementById('t-upgrader').innerText = t.upgrader;
-            document.getElementById('t-rocket').innerText = t.rocket;
-            
-            // Подсветка кнопок в настройках
-            document.querySelectorAll('#lang-select .segment-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === currentLang);
-            });
+            document.querySelectorAll('#lang-select .segment-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === currentLang));
         }
 
-        // === TELEGRAM ===
         const tg = window.Telegram?.WebApp;
         if (tg) {
-            tg.ready();
-            tg.expand();
-            tg.setHeaderColor('#050505');
-            tg.setBackgroundColor('#050505');
+            tg.ready(); tg.expand(); tg.setHeaderColor('#050505'); tg.setBackgroundColor('#050505');
             const user = tg.initDataUnsafe?.user;
             if (user) {
                 document.getElementById('profile-name').innerText = user.first_name;
@@ -269,42 +334,30 @@
             }
         }
 
-        // === СВАЙПЫ ===
         var swiper = new Swiper(".mySwiper", {
             spaceBetween: 0,
-            on: {
-                slideChange: function () {
-                    const activeIndex = this.activeIndex;
-                    document.querySelectorAll('.nav-item').forEach((nav, index) => {
-                        if (index === activeIndex) { nav.classList.add('active'); } else { nav.classList.remove('active'); }
-                    });
-                }
-            }
+            on: { slideChange: function () {
+                const activeIndex = this.activeIndex;
+                document.querySelectorAll('.nav-item').forEach((nav, index) => nav.classList.toggle('active', index === activeIndex));
+            }}
         });
 
-        document.querySelectorAll('.nav-item').forEach((item) => {
-            item.addEventListener('click', function() { swiper.slideTo(this.getAttribute('data-index')); });
-        });
+        document.querySelectorAll('.nav-item').forEach((item) => item.addEventListener('click', function() { swiper.slideTo(this.getAttribute('data-index')); }));
 
-        // === НАСТРОЙКИ ===
         const openBtn = document.getElementById('openSettings');
         const closeBtn = document.getElementById('closeSettings');
         const overlay = document.getElementById('settingsOverlay');
         const modal = document.getElementById('settingsModal');
 
-        function toggleModal() {
-            overlay.classList.toggle('active'); 
-            modal.classList.toggle('active');
-        }
+        function toggleModal() { overlay.classList.toggle('active'); modal.classList.toggle('active'); }
         openBtn.addEventListener('click', toggleModal);
         closeBtn.addEventListener('click', toggleModal);
         overlay.addEventListener('click', toggleModal);
 
-        // Обработка кнопок
         document.querySelectorAll('#currency-select .segment-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 currentCurr = this.dataset.curr;
-                localStorage.setItem('curr', currentCurr); // Сохраняем
+                localStorage.setItem('curr', currentCurr);
                 document.querySelectorAll('#currency-select .segment-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 updateBalance();
@@ -314,19 +367,14 @@
         document.querySelectorAll('#lang-select .segment-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 currentLang = this.dataset.lang;
-                localStorage.setItem('lang', currentLang); // Сохраняем
+                localStorage.setItem('lang', currentLang);
                 updateLanguage();
             });
         });
 
-        // Инициализация при запуске
         updateBalance();
         updateLanguage();
-        
-        // Подсветка валюты при запуске
-        document.querySelectorAll('#currency-select .segment-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.curr === currentCurr);
-        });
+        document.querySelectorAll('#currency-select .segment-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.curr === currentCurr));
     </script>
 </body>
 </html>
