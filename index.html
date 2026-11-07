@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Burmalda Games</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Подключаем Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -20,7 +19,8 @@
         .settings-btn { background: #151515; border: 1px solid #252525; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         .header-right { display: flex; gap: 8px; align-items: center; }
         
-        .connect-btn { background: linear-gradient(180deg, #3bb3ff 0%, #1c88d1 100%); color: #fff; border: none; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 15px rgba(59, 179, 255, 0.3); }
+        /* Кнопка подключения - теперь фиолетовая */
+        .connect-btn { background: linear-gradient(180deg, #b53cff 0%, #7a1bb3 100%); color: #fff; border: none; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 15px rgba(181, 60, 255, 0.3); }
         .balance-btn { background: #151515; color: #fff; border: 1px solid #252525; padding: 8px 14px; border-radius: 20px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 
         /* Баннер */
@@ -39,9 +39,10 @@
         .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%); }
         .card span { font-weight: 800; font-size: 14px; z-index: 2; text-shadow: 0 2px 5px rgba(0,0,0,0.8); text-align: center; line-height: 1.1; }
         
+        /* Цвета карточек в фиолетовых тонах */
         .card-upgrade { background: linear-gradient(145deg, #8a63ff 0%, #4b2bb3 100%); }
         .card-rocket { background: linear-gradient(145deg, #ff5c9c 0%, #a3184e 100%); }
-        .card-pvp { background: linear-gradient(145deg, #35e07f 0%, #12823f 100%); }
+        .card-pvp { background: linear-gradient(145deg, #a83aff 0%, #5a1b8a 100%); }
         .card-giveaway { background: linear-gradient(145deg, #ff5050 0%, #8e1414 100%); }
         .card-pickaxe { background: linear-gradient(145deg, #4da2ff 0%, #185ab3 100%); }
         .card-plinko { background: linear-gradient(145deg, #ffd63d 0%, #b38f0f 100%); color: #fff;}
@@ -49,9 +50,11 @@
         /* Нижнее меню */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-around; padding: 12px 0 25px 0; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #777; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .nav-item.active { color: #00ff87; transform: translateY(-2px); }
+        
+        /* Активный пункт меню - фиолетовый неон */
+        .nav-item.active { color: #b53cff; transform: translateY(-2px); text-shadow: 0 0 10px rgba(181, 60, 255, 0.5); }
         .nav-icon { font-size: 22px; filter: grayscale(1); transition: 0.2s; }
-        .nav-item.active .nav-icon { filter: grayscale(0); transform: scale(1.1); }
+        .nav-item.active .nav-icon { filter: grayscale(0) drop-shadow(0 0 5px rgba(181, 60, 255, 0.8)); transform: scale(1.1); }
 
         /* ПРОФИЛЬ */
         .profile-header { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 30px; }
@@ -61,24 +64,31 @@
         .stat-item { display: flex; flex-direction: column; }
         .stat-value { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 5px; }
         .stat-label { font-size: 11px; color: #777; margin-top: 2px; text-transform: uppercase; font-weight: 600; }
+        
         .profile-avatar-container { width: 33%; display: flex; flex-direction: column; align-items: center; }
-        .profile-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #00ff87 0%, #60efff 100%); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 900; margin-bottom: 10px; box-shadow: 0 0 20px rgba(0, 255, 135, 0.3); }
+        /* Аватарка с фиолетовым неоном */
+        .profile-avatar { width: 80px; height: 80px; background: linear-gradient(135deg, #b53cff 0%, #7a1bb3 100%); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 900; margin-bottom: 10px; box-shadow: 0 0 25px rgba(181, 60, 255, 0.6); border: 2px solid #b53cff; }
         .profile-name { font-size: 16px; font-weight: 800; }
 
         .profile-box { background: #111; border: 1px solid #222; border-radius: 20px; padding: 20px; margin-bottom: 20px; }
         .profile-box-title { font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
         
-        .ref-program-box { background: linear-gradient(135deg, #0d2b1e 0%, #0a1a12 100%); border: 1px solid rgba(0, 255, 135, 0.2); }
+        /* Реферальная программа в фиолетовом */
+        .ref-program-box { background: linear-gradient(135deg, #1a0d2b 0%, #0a0512 100%); border: 1px solid rgba(181, 60, 255, 0.2); }
         .ref-program-box p { color: #888; font-size: 14px; margin-bottom: 20px; font-weight: 500; }
         .ref-stats { display: flex; gap: 10px; margin-bottom: 20px; }
         .ref-stat { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; flex: 1; }
         .ref-stat .val { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
         .ref-stat .lbl { font-size: 12px; color: #777; font-weight: 600; }
-        .btn-outline-green { background: rgba(0, 255, 135, 0.1); border: 1px solid rgba(0, 255, 135, 0.3); color: #00ff87; padding: 12px 15px; border-radius: 12px; font-weight: 800; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; width: 100%; justify-content: center; }
+        
+        /* Кнопка перейти - фиолетовый неон */
+        .btn-outline-purple { background: rgba(181, 60, 255, 0.1); border: 1px solid rgba(181, 60, 255, 0.4); color: #b53cff; padding: 12px 15px; border-radius: 12px; font-weight: 800; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; width: 100%; justify-content: center; box-shadow: 0 0 15px rgba(181, 60, 255, 0.1); }
 
         .stats-tabs { display: flex; gap: 10px; margin-bottom: 20px; background: #050505; padding: 5px; border-radius: 14px; border: 1px solid #222; }
         .stats-tab { flex: 1; text-align: center; padding: 10px; border-radius: 10px; color: #777; font-weight: 700; font-size: 14px; cursor: pointer; transition: 0.2s; }
-        .stats-tab.active { background: #222; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        
+        /* Активный таб - фиолетовый */
+        .stats-tab.active { background: #b53cff; color: #fff; box-shadow: 0 2px 15px rgba(181, 60, 255, 0.4); }
 
         .transactions-desc { color: #555; font-size: 12px; margin-bottom: 15px; line-height: 1.4; font-weight: 500; }
         .tx-list { display: flex; flex-direction: column; }
@@ -87,15 +97,17 @@
         .tx-title { font-size: 15px; font-weight: 700; }
         .tx-date { font-size: 12px; color: #555; font-weight: 500; }
         .tx-amount { font-size: 15px; font-weight: 800; }
+        
+        /* Минус красный, плюс фиолетовый */
         .tx-amount.minus { color: #ff4a4a; }
-        .tx-amount.plus { color: #00ff87; }
+        .tx-amount.plus { color: #b53cff; }
         .tx-bg-minus { background: rgba(255, 74, 74, 0.05); }
-        .tx-bg-plus { background: rgba(0, 255, 135, 0.05); }
+        .tx-bg-plus { background: rgba(181, 60, 255, 0.05); }
     </style>
 </head>
 <body>
 
-    <!-- Шапка (она теперь вне свайпера, чтобы всегда быть наверху) -->
+    <!-- Шапка -->
     <div class="header">
         <button class="settings-btn">⚙️</button>
         <div class="header-right">
@@ -146,17 +158,17 @@
                 <h1 style="margin-bottom: 20px; font-weight: 800;">📊 Топ игроков</h1>
                 <div style="background: #111; border: 1px solid #222; border-radius: 15px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <div style="width: 30px; height: 30px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                        <div style="width: 30px; height: 30px; background: #b53cff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; box-shadow: 0 0 10px rgba(181, 60, 255, 0.5);">1</div>
                         <span style="font-weight: 700;">Игрок 1</span>
                     </div>
-                    <span style="color: #00ff87; font-weight: 800;">1000 ⭐</span>
+                    <span style="color: #b53cff; font-weight: 800;">1000 ⭐</span>
                 </div>
                 <div style="background: #111; border: 1px solid #222; border-radius: 15px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <div style="width: 30px; height: 30px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
                         <span style="font-weight: 700;">Игрок 2</span>
                     </div>
-                    <span style="color: #00ff87; font-weight: 800;">850 ⭐</span>
+                    <span style="color: #b53cff; font-weight: 800;">850 ⭐</span>
                 </div>
             </div>
 
@@ -202,7 +214,7 @@
                             <div class="lbl">Stars заработано</div>
                         </div>
                     </div>
-                    <button class="btn-outline-green">Перейти в раздел ›</button>
+                    <button class="btn-outline-purple">Перейти в раздел ›</button>
                 </div>
 
                 <div class="profile-box">
@@ -263,29 +275,25 @@
             user = tg.initDataUnsafe?.user;
         }
 
-                if (user) {
+        if (user) {
             document.getElementById('profile-name').innerText = user.first_name;
             
-            // Если у пользователя есть аватарка в ТГ, ставим её
             if (user.photo_url) {
                 const avatarDiv = document.getElementById('profile-avatar');
                 avatarDiv.style.backgroundImage = `url('${user.photo_url}')`;
                 avatarDiv.style.backgroundSize = 'cover';
                 avatarDiv.style.backgroundPosition = 'center';
-                avatarDiv.innerText = ''; // Убираем букву
+                avatarDiv.innerText = ''; 
             } else {
-                // Если фотки нет, оставляем букву
                 document.getElementById('profile-avatar').innerText = user.first_name.charAt(0).toUpperCase();
             }
         }
 
-        // Инициализация Swiper (Свайпы)
         var swiper = new Swiper(".mySwiper", {
             spaceBetween: 0,
-            allowTouchMove: true, // Разрешаем свайпы
+            allowTouchMove: true,
             on: {
                 slideChange: function () {
-                    // Когда свайпаешь, нижнее меню подсвечивается автоматически
                     const activeIndex = this.activeIndex;
                     document.querySelectorAll('.nav-item').forEach((nav, index) => {
                         if (index === activeIndex) {
@@ -298,11 +306,10 @@
             }
         });
 
-        // Клик по нижнему меню
         document.querySelectorAll('.nav-item').forEach((item) => {
             item.addEventListener('click', function() {
                 const index = this.getAttribute('data-index');
-                swiper.slideTo(index); // Плавно перелистываем на нужный слайд
+                swiper.slideTo(index); 
             });
         });
     </script>
